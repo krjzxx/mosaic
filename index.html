@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f4b6ca">
+<title>Для моей Моси ♡</title>
+<style>
+:root{--pink:#f4b6ca;--rose:#c85b80;--deep:#260d1c;--cream:#fff4f7}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Georgia,"Times New Roman",serif}
+body{min-height:100svh;overflow:hidden;background:#f8dce6;color:#71364b}
+button,input{font:inherit}
+.screen{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;visibility:hidden;transition:opacity .8s ease;overflow:hidden}
+.screen.active{opacity:1;visibility:visible}
+#lock{background:radial-gradient(circle at 20% 20%,#fff8fb 0,transparent 35%),linear-gradient(145deg,#fce8ef,#eaa6be 60%,#f8dce6)}
+#lock:before,#lock:after{content:"♡";position:absolute;color:#fff7fb;opacity:.45;font-size:150px;pointer-events:none}
+#lock:before{left:-22px;top:4%}#lock:after{right:-16px;bottom:2%;font-size:190px}
+.panel{width:min(100%,390px);text-align:center;position:relative;z-index:1}
+.eyebrow{letter-spacing:.22em;text-transform:uppercase;font:11px Arial,sans-serif;color:#a65b75}
+h1{font-size:clamp(32px,9vw,48px);font-weight:normal;line-height:1.12;margin:16px 0}
+.subtitle{font-size:17px;line-height:1.6;margin:0 auto 25px;max-width:290px}
+input{width:100%;border:1px solid #c9829a;background:#fff9fb;border-radius:16px;padding:16px;text-align:center;font-size:18px;letter-spacing:.08em;color:#73334d;outline:none;box-shadow:0 8px 24px #9c4c6820}
+input:focus{border-color:#a94468}
+.primary{border:0;border-radius:999px;background:linear-gradient(135deg,#d56c8e,#b8446c);color:white;padding:15px 28px;min-width:190px;margin-top:16px;box-shadow:0 9px 22px #9e3d5b35;cursor:pointer}
+.error{min-height:22px;margin:10px 0 0;color:#8b2349;font:13px Arial,sans-serif}
+
+.passcode-dots{display:flex;justify-content:center;gap:10px;margin:0 auto 22px}
+.passcode-dots i{display:block;width:9px;height:9px;border:1.5px solid #b65e7a;border-radius:50%;background:transparent;transition:background .15s,transform .15s}
+.passcode-dots i.filled{background:#b65e7a;transform:scale(1.08)}
+.keypad{width:252px;max-width:100%;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:10px 17px;justify-items:center}
+.key{width:66px;height:66px;border:1px solid #ffffff9c;border-radius:50%;background:#fff6fa9c;color:#74354d;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;font-size:27px;font-weight:300;box-shadow:0 3px 12px #9e4a6820;cursor:pointer;transition:transform .12s,background .12s; -webkit-tap-highlight-color:transparent}
+.key:active{transform:scale(.92);background:#ffffffd9}
+.key-spacer{width:66px;height:66px}
+.key-delete{font-size:23px;background:transparent;border-color:transparent;box-shadow:none}
+#passform .primary{margin-top:19px}
+#gift{background:radial-gradient(ellipse at 50% 75%,#fff3f7 0,#f3bdce 34%,#d66e91 100%);color:#fff8fb}
+.gift-wrap{position:relative;z-index:2;text-align:center;cursor:pointer;user-select:none;animation:bob 2.7s ease-in-out infinite}
+.gift{position:relative;width:190px;height:150px;margin:35px auto 25px;filter:drop-shadow(0 18px 20px #79244435);transition:transform .5s}
+.boxbase{position:absolute;bottom:0;left:10px;width:170px;height:105px;background:linear-gradient(100deg,#fff0f4,#f6c4d4 55%,#e99bb6);border-radius:5px 5px 12px 12px}
+.boxbase:before{content:"";position:absolute;left:68px;top:0;width:34px;height:100%;background:linear-gradient(90deg,#c94e78,#f7b5ca,#d55a82)}
+.lid{position:absolute;left:0;top:28px;width:190px;height:35px;border-radius:5px;background:linear-gradient(#fff8fa,#edb2c5);transform:rotate(-2deg);z-index:2;transition:transform .9s,top .9s}
+.lid:before{content:"";position:absolute;left:78px;top:0;width:34px;height:100%;background:#d65e87}
+.bow{position:absolute;z-index:3;left:72px;top:0;width:48px;height:34px}
+.bow:before,.bow:after{content:"";position:absolute;width:28px;height:25px;border:7px solid #bd3d69;border-radius:70% 70% 15% 70%;transform:rotate(25deg);left:-7px;top:0}
+.bow:after{transform:scaleX(-1) rotate(25deg);left:22px}
+.gift-wrap.opened .lid{top:-14px;transform:translate(25px,-24px) rotate(22deg)}
+.gift-wrap.opened .gift{transform:scale(1.06)}
+.tap{font:12px Arial,sans-serif;letter-spacing:.16em;text-transform:uppercase}
+.floating-heart{position:absolute;color:#fff;opacity:.7;animation:float 7s linear infinite;pointer-events:none}
+#reveal{background:radial-gradient(ellipse at 50% 40%,#8b3459 0,#42162e 48%,#180914 100%);color:#fff0f5}
+#reveal:before{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent,#f4a4c21a,transparent);animation:glow 5s ease-in-out infinite}
+.rain{position:absolute;inset:-30%;display:flex;flex-direction:column;justify-content:space-around;transform:rotate(-13deg);gap:25px;pointer-events:none;overflow:hidden}
+.rain span{white-space:nowrap;font-size:clamp(19px,5vw,30px);font-style:italic;letter-spacing:.06em;color:#ffb8d0;text-shadow:0 0 12px #ff78ad;opacity:.72;animation:marquee 17s linear infinite}
+.rain span:nth-child(even){animation-direction:reverse;opacity:.42;margin-left:-40%}
+.final-card{position:relative;z-index:2;width:min(88vw,360px);text-align:center;animation:appear 1.4s cubic-bezier(.2,.8,.2,1) both}
+.photo-frame{padding:9px 9px 15px;background:#fff0f5;border-radius:4px;box-shadow:0 0 50px #ff8ab555,0 18px 45px #10040d80;transform:rotate(-1.5deg)}
+.photo-frame img{display:block;width:100%;max-height:57svh;object-fit:cover;border-radius:2px}
+.love{font-size:clamp(27px,7.5vw,38px);font-style:italic;line-height:1.2;color:#ffe2eb;text-shadow:0 0 20px #ff75a5;margin:22px 0 8px}
+.small{font:11px Arial,sans-serif;letter-spacing:.2em;color:#e6a0ba}
+#burst{position:absolute;inset:0;pointer-events:none;z-index:4}
+.spark{position:absolute;color:#ffd7e4;animation:spark 1.8s ease-out forwards}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+@keyframes float{from{transform:translateY(110vh) rotate(0);opacity:0}15%{opacity:.8}to{transform:translateY(-20vh) rotate(220deg);opacity:0}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-35%)}}
+@keyframes glow{0%,100%{opacity:.25}50%{opacity:.8}}
+@keyframes appear{from{opacity:0;transform:translateY(18px) scale(.94)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes spark{from{transform:scale(.2);opacity:0}30%{opacity:1}to{transform:translate(var(--x),var(--y)) scale(1.4);opacity:0}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<section id="lock" class="screen active">
+  <div class="panel">
+    <div class="eyebrow">маленький секрет для тебя</div>
+    <h1>Только для<br>моей Моси ♡</h1>
+    <p class="subtitle">Чтобы открыть мой сюрприз,<br>введи нашу дату начала отношений</p>
+    <form id="passform">
+      <div class="passcode-dots" id="passcodeDots" aria-label="Введено цифр: 0 из 8">
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+      </div>
+      <div class="keypad" aria-label="Цифровая клавиатура">
+        <button type="button" class="key" data-digit="1">1</button>
+        <button type="button" class="key" data-digit="2">2</button>
+        <button type="button" class="key" data-digit="3">3</button>
+        <button type="button" class="key" data-digit="4">4</button>
+        <button type="button" class="key" data-digit="5">5</button>
+        <button type="button" class="key" data-digit="6">6</button>
+        <button type="button" class="key" data-digit="7">7</button>
+        <button type="button" class="key" data-digit="8">8</button>
+        <button type="button" class="key" data-digit="9">9</button>
+        <span class="key-spacer"></span>
+        <button type="button" class="key" data-digit="0">0</button>
+        <button type="button" class="key key-delete" id="deleteDigit" aria-label="Удалить последнюю цифру">⌫</button>
+      </div>
+      <button class="primary" type="submit">Открыть ♡</button>
+      <div id="error" class="error" aria-live="polite"></div>
+    </form>
+  </div>
+</section>
+<section id="gift" class="screen">
+  <div class="panel">
+    <div class="eyebrow" style="color:#fff0f5">для самого любимого человека</div>
+    <h1 style="font-size:42px">Мося ♡</h1>
+    <p class="subtitle">Я приготовил для тебя<br>кое-что маленькое, но от всего сердца…</p>
+    <div class="gift-wrap" id="giftButton" role="button" tabindex="0" aria-label="Открыть подарок">
+      <div class="gift"><div class="boxbase"></div><div class="lid"></div><div class="bow"></div></div>
+      <div class="tap">нажми на подарок ♡</div>
+    </div>
+  </div>
+</section>
+<section id="reveal" class="screen">
+  <div class="rain" aria-hidden="true">
+    <span>я люблю тебя ♡ я люблю тебя ♡ я люблю тебя ♡</span>
+    <span>я люблю тебя · я люблю тебя · я люблю тебя ·</span>
+    <span>я люблю тебя ♡ я люблю тебя ♡ я люблю тебя ♡</span>
+    <span>я люблю тебя · я люблю тебя · я люблю тебя ·</span>
+    <span>я люблю тебя ♡ я люблю тебя ♡ я люблю тебя ♡</span>
+    <span>я люблю тебя · я люблю тебя · я люблю тебя ·</span>
+  </div>
+  <div class="final-card">
+    <div class="photo-frame"><img src="our-photo.jpeg" alt="Наше фото"></div>
+    <div class="love">Мося, я люблю тебя!</div>
+    <div class="small">29 · 10 · 2023 — НАВСЕГДА ♡</div>
+  </div>
+  <div id="burst"></div>
+</section>
+<script>
+const screens = [...document.querySelectorAll('.screen')];
+function show(id){screens.forEach(s=>s.classList.toggle('active',s.id===id));}
+let entered = '';
+const dots = [...document.querySelectorAll('#passcodeDots i')];
+const errorBox = document.getElementById('error');
+function renderDots(){
+  dots.forEach((dot,i)=>dot.classList.toggle('filled',i<entered.length));
+  document.getElementById('passcodeDots').setAttribute('aria-label',`Введено цифр: ${entered.length} из 8`);
+}
+function checkPasscode(){
+  if(entered.length===8){
+    if(entered==='29102023'){
+      errorBox.textContent='';
+      show('gift');
+    } else {
+      errorBox.textContent='Попробуй ещё раз, Мося ♡';
+      entered='';
+      renderDots();
+    }
+  }
+}
+document.querySelectorAll('[data-digit]').forEach(button=>{
+  button.addEventListener('click',()=>{
+    if(entered.length<8){entered+=button.dataset.digit;renderDots();checkPasscode();}
+  });
+});
+document.getElementById('deleteDigit').addEventListener('click',()=>{
+  entered=entered.slice(0,-1);errorBox.textContent='';renderDots();
+});
+document.getElementById('passform').addEventListener('submit',e=>{
+  e.preventDefault();
+  if(entered.length<8) errorBox.textContent='Введи все 8 цифр нашей даты ♡';
+  else checkPasscode();
+});
+const gift=document.getElementById('giftButton');
+function openGift(){
+  if(gift.classList.contains('opened'))return;
+  gift.classList.add('opened');
+  setTimeout(()=>{show('reveal');makeSparks();},850);
+}
+gift.addEventListener('click',openGift);
+gift.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openGift();}});
+function makeSparks(){
+  const area=document.getElementById('burst');
+  for(let i=0;i<36;i++){
+    const el=document.createElement('span');el.className='spark';el.textContent=['♡','✦','♥'][i%3];
+    el.style.left=(10+Math.random()*80)+'%';el.style.top=(15+Math.random()*70)+'%';
+    el.style.setProperty('--x',(Math.random()*100-50)+'px');el.style.setProperty('--y',(Math.random()*100-50)+'px');
+    el.style.animationDelay=(Math.random()*.8)+'s';el.style.fontSize=(12+Math.random()*18)+'px';area.appendChild(el);
+    setTimeout(()=>el.remove(),2800);
+  }
+}
+for(let i=0;i<16;i++){
+ const h=document.createElement('span');h.className='floating-heart';h.textContent=i%2?'♡':'♥';
+ h.style.left=Math.random()*100+'%';h.style.animationDelay=(-Math.random()*7)+'s';h.style.animationDuration=(5+Math.random()*5)+'s';h.style.fontSize=(14+Math.random()*24)+'px';
+ document.getElementById('gift').appendChild(h);
+}
+</script>
+</body>
+</html>
